@@ -16,7 +16,7 @@ import {
   AppSidebarNav2 as AppSidebarNav
 } from "@coreui/react";
 // sidebar nav config
-import navigation from "../../_navemp";
+import navigation from "../../_navorder";
 // routes config
 import routes from "../../routes";
 
@@ -28,18 +28,16 @@ const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
 
 
 
-const SalesManagement =React.lazy(() => import("../../views/SalesManagement/Dashboard"));
-const Employee=React.lazy(() => import("../../views/EmployeeManagement/EmployeeDashboard"));
-const Offer=React.lazy(() => import("../../views/EmployeeManagement/Offer"));
-const SupplierDisplay=React.lazy(() => import("../../views/SupplierManagement/SupplierDisplay"));
-const SupplierAdd=React.lazy(() => import("../../views/SupplierManagement/SupplierAdd"));
+
+const OrderManagement=React.lazy(() => import("../../views/OrderManagement/OrderManagement"));
+
 
 const override = css`
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
-class DefaultLayoutEmployee extends Component {
+class DefaultLayoutOrder extends Component {
   // loading = () => (
   //   <div className="animated fadeIn pt-1 text-center">Loading...</div>
   // );
@@ -100,36 +98,15 @@ class DefaultLayoutEmployee extends Component {
 
               <Route
               exact
-              path="/employee/employeemanagement"
-              name="EmployeeManagemnt"
-              render={(props) => <Employee {...props} />}
-            />
-
-            <Route
-              exact
-              path="/employee/supplierdisplay"
-              name="SupplierDisplay"
-              render={(props) => <SupplierDisplay {...props} />}
-            />
-
-            <Route
-              exact
-              path="/employee/supplieradd"
-              name="SupplierAdd"
-              render={(props) => <SupplierAdd {...props} />}
-            />
-
-          <Route
-              exact
-              path="/employee/offer"
-              name="offer"
-              render={(props) => <Offer {...props} />}
+              path="/order/ordermanagement"
+              name="OrderManagement"
+              render={(props) => <OrderManagement {...props} />}
             />
 
 
 
 
-                  <Redirect from="/employee" to="/login" />
+                  <Redirect from="/order" to="/login" />
                 </Switch>
               </Suspense>
             </Container>
@@ -146,4 +123,4 @@ class DefaultLayoutEmployee extends Component {
   }
 }
 
-export default DefaultLayoutEmployee;
+export default DefaultLayoutOrder;
