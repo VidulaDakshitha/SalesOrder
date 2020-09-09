@@ -54,13 +54,18 @@ class Login extends Component {
 if(this.state.username==="sales" && this.state.password==="sales")
 {
   window.location.href="#/salesmanagement"
-  localStorage.setItem("user","sales");
+  
 }else if(this.state.username==="employee" && this.state.password==="employee"){
 
   window.location.href="#/employee/employeemanagement"
-  localStorage.setItem("user","employee");
   
+  
+}else if(this.state.username==="order" && this.state.password==="order"){
+  window.location.href="#/order/ordermanagement"
+}else if(this.state.username==="customer" && this.state.password==="customer"){
+  window.location.href="#/customer/orderinfo"
 }else{
+
   alert("Invalid logins");
 }
   }
