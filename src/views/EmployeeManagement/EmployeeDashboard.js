@@ -1,4 +1,5 @@
 import React, { Component} from 'react';
+import axios from '../../axios';
 
 import {
     Badge,
@@ -31,6 +32,13 @@ class EmployeeDashboard extends Component{
         this.state={
 
             large: false,
+            username:"",
+            password:"",
+            gender:"",
+            dob:"",
+            nic:"",
+            job_role:"",
+            address:""
         }
     }
 
@@ -38,6 +46,68 @@ class EmployeeDashboard extends Component{
         this.setState({
           large: !this.state.large,
         });
+      }
+
+      onChangeHandler=(e)=>{
+
+        this.setState({
+          [e.target.name]:e.target.value
+        })
+    
+        if(e.target.value.length<7)
+        {
+          console.log("visited")
+          this.setState(
+            {
+              valid1: false,
+              invalid1: true,
+            }
+          );
+    
+        }else{
+          console.log("visited 2")
+          this.setState(
+            {
+              invalid1: false,
+              valid1: true,
+            }
+          );
+    
+        }
+      }
+
+      onSubmitHandler=(e)=>{
+        e.preventDefault();
+
+        const regEmployees={
+          username:this.state.username,
+          password:this.state.password,
+          gender: this.state.gender,
+          dob: this.state.dob,
+          nic: this.state.nic,
+          job_role: this.state.job_role,
+          address: this.state.address
+        }
+
+        // const url = "/user/update/";
+        // BaseService.PostService(url, regUsers)
+        //   .then((res) => {
+        //     if (res.data.success === true) {
+        //       alertify.success("Successfully Registered");
+        //       window.location.href="/#/login";
+        //     } else {
+        //       alertify.alert("Cannot perform the operation");
+        //     }
+        //   })
+        //   .catch((err) => {
+        //     alertify.alert("Cannot perform the operation");
+        //   });
+
+          console.log(regEmployees);
+
+          axios.post('employee',regEmployees)
+                  .then(res=>console.log('Added new register user :'+res.data))
+                  .catch(err=>console.log('Error!! unsuccessful :'+err.data));
       }
 
     render(){
@@ -113,8 +183,8 @@ class EmployeeDashboard extends Component{
                       Add Employee
                     </ModalHeader>
                     <ModalBody>
-                      <form onSubmit={this.submitHandler}>
-                      <InputGroup className="mb-3">
+                      <form onSubmit={this.onSubmitHandler}>
+                      {/* <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="icon-user"></i>
@@ -133,124 +203,74 @@ class EmployeeDashboard extends Component{
                       </InputGroupAddon>
                       <Input type="text" placeholder="Last Name" name="lastname" value={this.state.lastname}   onChange={this.onChangeHandler}/>
                       
-                    </InputGroup>
+                    </InputGroup> */}
 
-                    <FormGroup tag="fieldset">
-                    <p className="text-muted">Gender</p>
-        <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
-          
-          <Label check>
-            <Input type="radio" name="gender" />{' '}
-            Male
-          </Label>
-        </FormGroup>
-        <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
-          <Label check>
-            <Input type="radio" name="gender" />{' '}
-           Female
-          </Label>
-        </FormGroup>
-        
-        </FormGroup>
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="icon-user"></i>
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input type="text" placeholder="Username" name="username" value={this.state.username} onChange={this.onChangeHandler}/>
+                              </InputGroup>
 
-
-
-
-        <FormGroup>
-        <p className="text-muted">Enter Birthdate</p>
-        <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-calendar"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="Date" placeholder="Enter DOB" name="dob" value={this.state.dob}   onChange={this.onChangeHandler}/>
-                      
-                    </InputGroup></FormGroup>
+                              <FormGroup tag="fieldset">
+                                    <p className="text-muted">Gender</p>   
+                                      <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
+                                            <Label check>
+                                              <Input type="radio" name="gender" value="Male" onChange={this.onChangeHandler} />{' '}
+                                              Male
+                                            </Label>
+                                      </FormGroup>
+                                      <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
+                                            <Label check> 
+                                              <Input type="radio" name="gender" value="Female" onChange={this.onChangeHandler} />{' '}
+                                            Female
+                                            </Label>
+                                      </FormGroup>
+                              </FormGroup>
 
 
+                              <FormGroup>
+                              <p className="text-muted">Enter Birthdate</p>
+                              <InputGroup className="mb-3">
+                                            <InputGroupAddon addonType="prepend">
+                                              <InputGroupText>
+                                                <i className="icon-calendar"></i>
+                                              </InputGroupText>
+                                            </InputGroupAddon>
+                                            <Input type="Date" placeholder="Enter DOB" name="dob" value={this.state.dob} onChange={this.onChangeHandler}/>
+                                          </InputGroup>
+                              </FormGroup>
 
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="icon-user"></i>
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input type="text" placeholder="NIC" name="nic" value={this.state.nic}   onChange={this.onChangeHandler}/>
+                              </InputGroup>
 
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="NIC" name="nic" value={this.state.nic}   onChange={this.onChangeHandler}/>
-                      
-                    </InputGroup>
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="icon-user"></i>
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input type="text" placeholder="Address" name="address" value={this.state.address}   onChange={this.onChangeHandler}/>
+                              </InputGroup>
 
+                              <InputGroup className="mb-3">
+                                <InputGroupAddon addonType="prepend">
+                                  <InputGroupText>
+                                    <i className="icon-user"></i>
+                                  </InputGroupText>
+                                </InputGroupAddon>
+                                <Input type="text" placeholder="Job role" name="job_role" value={this.state.job_role} onChange={this.onChangeHandler}/>
+                              </InputGroup>
 
-
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-phone"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Contact Number" name="phone" value={this.state.phone}   onChange={this.onChangeHandler}/>
-                      
-                    </InputGroup>
-
-
-
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Address" name="address" value={this.state.address}   onChange={this.onChangeHandler}/>
-                      
-                    </InputGroup>
-
-
-
-
-                    <FormGroup tag="fieldset">
-                    <p className="text-muted">Status</p>
-        <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
-          
-          <Label check>
-            <Input type="radio" name="status" />{' '}
-            Single
-          </Label>
-        </FormGroup>
-        <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
-          <Label check>
-            <Input type="radio" name="status" />{' '}
-           Married
-          </Label>
-        </FormGroup>
-        
-        </FormGroup>
-
-
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Basic Salary" name="salary" value={this.state.salary}  onChange={this.onChangeHandler}/>
-                      
-                    </InputGroup>
-
-
-
-
-
-
-
-
-
-                
-
-
-                 
-
-                    <Button color="success" >Add Employee</Button>
+                    <Button color="success" type="submit" >Add Employee</Button>
 
                       </form>
                     </ModalBody>
