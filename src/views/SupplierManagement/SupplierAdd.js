@@ -43,13 +43,17 @@ class Supplier extends Component {
   onSubmitHandler=(e)=>{
     e.preventDefault();
     const supAdd={
-        supName: this.state.supName,
+        supplier_name: this.state.supName,
         contact: this.state.contact,
         email: this.state.email,
-        joinDate: this.state.joinDate
+        join_date: this.state.joinDate
     }
 
     console.log(supAdd);
+
+    axios.post('supplier',supAdd)
+                    .then(res=>console.log('Added new register user :'+res.data))
+                    .catch(err=>console.log('Error!! unsuccessful :'+err.data));
   }
 
   render() {

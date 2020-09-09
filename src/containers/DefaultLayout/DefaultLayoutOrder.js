@@ -30,6 +30,7 @@ const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
 
 
 const OrderManagement=React.lazy(() => import("../../views/OrderManagement/OrderManagement"));
+const StockManagement=React.lazy(() => import("../../views/OrderManagement/StockManagement"));
 
 
 const override = css`
@@ -101,6 +102,13 @@ class DefaultLayoutOrder extends Component {
               path="/order/ordermanagement"
               name="OrderManagement"
               render={(props) => <OrderManagement {...props} />}
+            />
+
+<Route
+              exact
+              path="/order/stockmanagement"
+              name="stockManagement"
+              render={(props) => <StockManagement {...props} />}
             />
 
 

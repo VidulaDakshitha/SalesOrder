@@ -8,41 +8,32 @@ import "alertifyjs/build/css/alertify.css";
 import "alertifyjs/build/css/themes/default.min.css";
 import ImageUploader from 'react-images-upload';
 
-class Offer extends Component {
+
+class StockManagement extends Component {
   constructor(props){
     super(props);
     this.state={
-      startDate:"",
-      endDate:"",
-      details:"",
-      batchID:"",
-      brandID:"",
+      proName:"",
+      proPrice:"",
+      proDetails:"",
       pictures: []
     }
 
     this.onDrop = this.onDrop.bind(this);
-    this.handleStartDate = this.handleStartDate.bind(this);
-    this.handleEndDate = this.handleEndDate.bind(this);
-    this.handleDetails = this.handleDetails.bind(this);
-    this.handleBatchID = this.handleBatchID.bind(this);
-    this.handleBrandID = this.handleBrandID.bind(this);
+    this.handleProName = this.handleProName.bind(this);
+    this.handleProPrice = this.handleProPrice.bind(this);
+    this.handleProDetails = this.handleProDetails.bind(this);
     
   }
   
-  handleStartDate(event){
-    this.setState({startDate: event.target.value})
+  handleProName(event){
+    this.setState({proName: event.target.value})
   }
-  handleEndDate(event){
-    this.setState({endDate: event.target.value})
+  handleProPrice(event){
+    this.setState({proPrice: event.target.value})
   }
-  handleDetails(event){
-    this.setState({details: event.target.value})
-  }
-  handleBatchID(event){
-    this.setState({batchID: event.target.value})
-  }
-  handleBrandID(event){
-    this.setState({brandID: event.target.value})
+  handleProDetails(event){
+    this.setState({proDetails: event.target.value})
   }
   onDrop(picture) {
     this.setState({
@@ -52,18 +43,16 @@ class Offer extends Component {
 
   onSubmitHandler=(e)=>{
     e.preventDefault();
-    const offerAdd={
-      start_date: this.state.startDate,
-      end_date: this.state.endDate,
-      details: this.state.details,
-      batchID: this.state.batchID,
-      brandID: this.state.brandID,
-      img: this.state.pictures
+    const stockAdd={
+        proName: this.state.proName,
+        proPrice: this.state.proPrice,
+        proDetails: this.state.proDetails,
+        img: this.state.pictures
     }
 
-    console.log(offerAdd);
+    console.log(stockAdd);
 
-    axios.post('offers',offerAdd)
+    axios.post('stock',stockAdd)
                     .then(res=>console.log('Added new register user :'+res.data))
                     .catch(err=>console.log('Error!! unsuccessful :'+err.data));
   }
@@ -78,15 +67,15 @@ class Offer extends Component {
                 <Card className="p-4">
                   <CardBody>
                     <Form onSubmit={this.onSubmitHandler}>
-                      <h1>OFFER MANAGEMENT</h1>
-                      <p className="text-muted">Add Offers</p>
+                      <h1>Stock Management</h1>
+                      <p className="text-muted">Add Stocks</p>
                       <InputGroup className="mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="icon-calendar"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="date" placeholder="Starting date" name="start_date" onChange={this.handleStartDate} required />
+                        <Input type="text" placeholder="Pro Name" name="proName" onChange={this.handleProName} required />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -94,7 +83,7 @@ class Offer extends Component {
                             <i className="icon-calendar"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="date" placeholder="End date" name="end_date" onChange={this.handleEndDate} required />
+                        <Input type="text" placeholder="Pro Price" name="proPrice" onChange={this.handleProPrice} required />
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -102,23 +91,7 @@ class Offer extends Component {
                             <i className="icon-tag"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="text" placeholder="Details" name="details" onChange={this.handleDetails} required />
-                      </InputGroup>
-                      <InputGroup className="mb-4">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-tag"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="text" placeholder="Batch ID" name="batch_id" onChange={this.handleBatchID} required />
-                      </InputGroup>
-                      <InputGroup className="mb-4">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-tag"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="text" placeholder="Brand ID" name="brand_id" onChange={this.handleBrandID} required />
+                        <Input type="text" placeholder="Pro Details" name="proDetails" onChange={this.handleProDetails} required />
                       </InputGroup>
 
                       <InputGroup className="mb-4">
@@ -150,4 +123,4 @@ class Offer extends Component {
   }
 }
 
-export default Offer;
+export default StockManagement;

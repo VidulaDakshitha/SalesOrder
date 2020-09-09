@@ -36,6 +36,7 @@ const SupplierAdd=React.lazy(() => import("../../views/SupplierManagement/Suppli
 
 const CustomerOrders=React.lazy(() => import("../../views/CustomerManagement/CustomerManagement"));
 
+
 const override = css`
   display: block;
   margin: 0 auto;
@@ -110,6 +111,8 @@ class DefaultLayoutEmployee extends Component {
               name="orderinfo"
               render={(props) => <CustomerOrders {...props} />}
             />
+
+
 
           
 

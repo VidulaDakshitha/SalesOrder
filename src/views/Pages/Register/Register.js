@@ -7,7 +7,7 @@ import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/alertify.css";
 import "alertifyjs/build/css/themes/default.min.css";
 // import * as BaseService from "../../../BaseService.js";
-import axios from '../../../axios';
+import axios from '../../../Axios';
 
 
 class Register extends Component {

@@ -13,6 +13,11 @@ export default {
           variant: 'info',
         },
       },
+      {
+        name: 'Stock',
+        url: '/order/stockmanagement',
+        icon: 'icon-list',
+      },
    
       {
         name: 'Order History',
@@ -39,6 +44,7 @@ export default {
         url: '/#',
         icon: 'icon-list',
       },
+      
     
       
     ],
