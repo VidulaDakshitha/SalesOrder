@@ -7,6 +7,27 @@ export default {
         url: '/employee/employeemanagement',
         icon: 'icon-user',
       },
+      {
+      
+        name: 'View Supplier',
+        url: '/employee/supplierdisplay',
+        icon: 'icon-list',
+      },
+      {
+      
+        name: 'Add Supplier',
+        url: '/employee/supplieradd',
+        icon: 'icon-plus',
+      },
+
+      {
+      
+        name: 'Offers',
+        url: '/employee/offer',
+        icon: 'icon-plus',
+      },
+      
+      
       // {
       //   title: true,
       //   name: 'Components',

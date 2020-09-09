@@ -16,7 +16,7 @@ import {
   AppSidebarNav2 as AppSidebarNav
 } from "@coreui/react";
 // sidebar nav config
-import navigation from "../../_navemp";
+import navigation from "../../_navcustomer";
 // routes config
 import routes from "../../routes";
 
@@ -33,6 +33,9 @@ const Employee=React.lazy(() => import("../../views/EmployeeManagement/EmployeeD
 const Offer=React.lazy(() => import("../../views/EmployeeManagement/Offer"));
 const SupplierDisplay=React.lazy(() => import("../../views/SupplierManagement/SupplierDisplay"));
 const SupplierAdd=React.lazy(() => import("../../views/SupplierManagement/SupplierAdd"));
+
+const CustomerOrders=React.lazy(() => import("../../views/CustomerManagement/CustomerManagement"));
+
 
 const override = css`
   display: block;
@@ -64,9 +67,13 @@ class DefaultLayoutEmployee extends Component {
           </Suspense>
         </AppHeader>
         <div className="app-body">
+        
           <AppSidebar fixed display="lg">
+          
             <AppSidebarHeader />
+            
             <AppSidebarForm />
+            <img src={'../../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
             <Suspense>
               <AppSidebarNav
                 navConfig={navigation}
@@ -96,45 +103,26 @@ class DefaultLayoutEmployee extends Component {
                     ) : null;
                   })} */}
 
-
+           
 
               <Route
               exact
-              path="/employee/employeemanagement"
-              name="EmployeeManagemnt"
-              render={(props) => <Employee {...props} />}
-            />
-
-            <Route
-              exact
-              path="/employee/supplierdisplay"
-              name="SupplierDisplay"
-              render={(props) => <SupplierDisplay {...props} />}
-            />
-
-            <Route
-              exact
-              path="/employee/supplieradd"
-              name="SupplierAdd"
-              render={(props) => <SupplierAdd {...props} />}
-            />
-
-          <Route
-              exact
-              path="/employee/offer"
-              name="offer"
-              render={(props) => <Offer {...props} />}
+              path="/customer/orderinfo"
+              name="orderinfo"
+              render={(props) => <CustomerOrders {...props} />}
             />
 
 
 
+          
 
-                  <Redirect from="/employee" to="/main" />
+
+                  <Redirect from="/customer" to="/login" />
                 </Switch>
               </Suspense>
             </Container>
           </main>
-
+        
         </div>
         <AppFooter>
           <Suspense fallback={this.loading()}>

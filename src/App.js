@@ -22,7 +22,12 @@ const loading = () => (
 // Containers
 const DefaultLayout = React.lazy(() => import("./containers/DefaultLayout"));
 const DefaultLayoutEmployee=React.lazy(() => import("./containers/DefaultLayout/DefaultLayoutEmployee"));
+
 const HomePagee=React.lazy(() => import("./views/Pages/Home/Home"));
+
+
+const DefaultLayoutOrder=React.lazy(() => import("./containers/DefaultLayout/DefaultLayoutOrder"));
+const DefaultLayoutCustomer=React.lazy(() => import("./containers/DefaultLayout/DefaultLayoutCustomer"));
 
 
 // Pages
@@ -86,11 +91,26 @@ class App extends Component {
               name="Page 500"
               render={(props) => <Page500 {...props} />}
             />
+
+              <Route
+              path="/order"
+              name="Order"
+              render={(props) => <DefaultLayoutOrder {...props} />}
+            />
+
+
               <Route
               path="/employee"
               name="Employee"
               render={(props) => <DefaultLayoutEmployee {...props} />}
             />
+
+            <Route
+              path="/customer"
+              name="Customer"
+              render={(props) => <DefaultLayoutCustomer {...props} />}
+            />
+
 
             <Route
               path="/"

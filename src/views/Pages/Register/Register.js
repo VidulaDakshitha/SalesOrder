@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Button, Card, CardBody, CardFooter, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, FormFeedback,FormGroup,Label } from 'reactstrap';
 import queryString from 'query-string'
-import axios from "axios";
+// import axios from "axios";
 import alertify from "alertifyjs/build/alertify";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/alertify.css";
 import "alertifyjs/build/css/themes/default.min.css";
-import * as BaseService from "../../../BaseService.js";
+// import * as BaseService from "../../../BaseService.js";
+import axios from '../../../axios';
+
+
 class Register extends Component {
 
   constructor(props){
@@ -21,16 +24,17 @@ class Register extends Component {
       valid1:false,
       invalid1:false,
       username:"",
+      gender:"",
+      dob:"",
+      nic: "",
+      email:"",
+      phone:"",
+      profession:""
+
 
     }
   }
 
-
-  componentDidMount=()=>{
-    
-     
-    
-  }
 
   onChangeHandler=(e)=>{
 
@@ -58,7 +62,7 @@ class Register extends Component {
       );
 
     }
-   
+
   }
 
   HandlepasswordConfirm=(e)=>{
@@ -79,39 +83,47 @@ class Register extends Component {
       );
     }
     // console.log(this.state.malidi);
-  
+
   }
 
   onSubmitHandler=(e)=>{
-e.preventDefault();
+          e.preventDefault();
 
-const regUsers={
-  username:this.state.username,
-  password:this.state.password,
- 
-}
+          const regUsers={
+            username:this.state.username,
+            password:this.state.password,
+            gender: this.state.gender,
+            dob: this.state.dob,
+            email: this.state.email,
+            contact: this.state.phone,
+            profession: this.state.profession
+          }
 
-const url = "/user/update/";
-BaseService.PostService(url, regUsers)
-  .then((res) => {
-    if (res.data.success === true) {
-      alertify.success("Successfully Registered");
-      window.location.href="/#/login";
-    } else {
-      alertify.alert("Cannot perform the operation");
-    }
-  })
-  .catch((err) => {
-    alertify.alert("Cannot perform the operation");
-  });
+          // const url = "/user/update/";
+          // BaseService.PostService(url, regUsers)
+          //   .then((res) => {
+          //     if (res.data.success === true) {
+          //       alertify.success("Successfully Registered");
+          //       window.location.href="/#/login";
+          //     } else {
+          //       alertify.alert("Cannot perform the operation");
+          //     }
+          //   })
+          //   .catch((err) => {
+          //     alertify.alert("Cannot perform the operation");
+          //   });
 
+            console.log(regUsers);
 
+            axios.post('customer',regUsers)
+                    .then(res=>console.log('Added new register user :'+res.data))
+                    .catch(err=>console.log('Error!! unsuccessful :'+err.data));
   }
-  
+
   render() {
     return (
 
-      
+
       <div className="app flex-row align-items-center" style={{paddingTop:"350px"}}>
         <Container>
           <Row className="justify-content-center">
@@ -121,8 +133,8 @@ BaseService.PostService(url, regUsers)
                   <Form onSubmit={this.onSubmitHandler}>
                     <h1>Customer Registration</h1>
                     <p className="text-muted">Create your account</p>
-                    
-            
+
+
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
@@ -130,9 +142,9 @@ BaseService.PostService(url, regUsers)
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="First Name" name="firstname" value={this.state.firstname} autoComplete="new-password"  onChange={this.onChangeHandler}/>
-                      
+
                     </InputGroup>
-                    
+
 
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -141,7 +153,7 @@ BaseService.PostService(url, regUsers)
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="Last Name" name="lastname" value={this.state.lastname}   onChange={this.onChangeHandler}/>
-                      
+
                     </InputGroup>
 
 
@@ -152,9 +164,27 @@ BaseService.PostService(url, regUsers)
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="User Name" name="username" value={this.state.username}  onChange={this.onChangeHandler}/>
-                      
+
                     </InputGroup>
 
+                    <InputGroup className="mb-4">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="icon-tag"></i>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input type="email" placeholder="Email" name="email" onChange={this.onChangeHandler} />
+                      </InputGroup>
+
+                      <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-user"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="text" placeholder="Profession" name="profession" value={this.state.profession} autoComplete="new-password"  onChange={this.onChangeHandler}/>
+
+                    </InputGroup>
 
                     <InputGroup className="mb-3">
                       <InputGroupAddon addonType="prepend">
@@ -163,38 +193,38 @@ BaseService.PostService(url, regUsers)
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="NIC" name="nic" value={this.state.nic}   onChange={this.onChangeHandler}/>
-                      
+
                     </InputGroup>
 
 
                     <FormGroup tag="fieldset">
-                    <p className="text-muted">Gender</p>
-        <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
-          
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-            Male
-          </Label>
-        </FormGroup>
-        <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
-          <Label check>
-            <Input type="radio" name="radio1" />{' '}
-           Female
-          </Label>
-        </FormGroup>
-        
-        </FormGroup>
-        <FormGroup>
-        <p className="text-muted">Enter Birthdate</p>
-        <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-calendar"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="Date" placeholder="Enter DOB" name="dob" value={this.state.dob}   onChange={this.onChangeHandler}/>
-                      
-                    </InputGroup></FormGroup>
+                          <p className="text-muted">Gender</p>
+                            <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
+                                  <Label check>
+                                    <Input type="radio" name="gender" value="Male" onChange={this.onChangeHandler} />{' '}
+                                    Male
+                                  </Label>
+                            </FormGroup>
+                            <FormGroup check className="mt-4" style={{paddingLeft:"30px"}}>
+                                  <Label check>
+                                    <Input type="radio" name="gender" value="Female" onChange={this.onChangeHandler} />{' '}
+                                  Female
+                                  </Label>
+                            </FormGroup>
+                    </FormGroup>
+
+                    <FormGroup>
+                    <p className="text-muted">Enter Birthdate</p>
+                    <InputGroup className="mb-3">
+                                  <InputGroupAddon addonType="prepend">
+                                    <InputGroupText>
+                                      <i className="icon-calendar"></i>
+                                    </InputGroupText>
+                                  </InputGroupAddon>
+                                  <Input type="Date" placeholder="Enter DOB" name="dob" value={this.state.dob}  onChange={this.onChangeHandler}/>
+
+                                </InputGroup>
+                    </FormGroup>
 
 
 
@@ -206,7 +236,7 @@ BaseService.PostService(url, regUsers)
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="Address" name="address" value={this.state.address}   onChange={this.onChangeHandler}/>
-                      
+
                     </InputGroup>
 
 
@@ -217,12 +247,12 @@ BaseService.PostService(url, regUsers)
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="Contact Number" name="phone" value={this.state.phone}   onChange={this.onChangeHandler}/>
-                      
+
                     </InputGroup>
 
 
                     <InputGroup className="mb-3">
-                      
+
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           <i className="icon-lock"></i>
@@ -231,8 +261,8 @@ BaseService.PostService(url, regUsers)
                       <Input type="password" placeholder="Password" name="password" value={this.state.password} autoComplete="new-password" valid={this.state.valid1} invalid={this.state.invalid1} onChange={this.onChangeHandler}/>
                       <FormFeedback>Password length should be more than 7</FormFeedback>
                     </InputGroup>
-                    
-                    
+
+
                     <InputGroup className="mb-4">
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>

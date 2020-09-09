@@ -24,6 +24,12 @@ class Navigation extends Component {
               <li className="nav-item active">
                 <a href="/#/offers" className="nav-link" >Offers</a>
               </li>
+              <li className="nav-item active">
+                <a href="/#/login" className="nav-link" >Login</a>
+              </li>
+              <li className="nav-item active">
+                <a href="/#/register" className="nav-link" >Register</a>
+              </li>
 
             </ul>
             <form className="form-inline my-2 my-lg-0">
