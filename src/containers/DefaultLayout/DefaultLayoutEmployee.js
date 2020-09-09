@@ -94,7 +94,7 @@ class DefaultLayoutEmployee extends Component {
                     ) : null;
                   })} */}
 
-           
+
 
               <Route
               exact
@@ -106,12 +106,12 @@ class DefaultLayoutEmployee extends Component {
 
 
 
-                  <Redirect from="/employee" to="/login" />
+                  <Redirect from="/employee" to="/main" />
                 </Switch>
               </Suspense>
             </Container>
           </main>
-        
+
         </div>
         <AppFooter>
           <Suspense fallback={this.loading()}>

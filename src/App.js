@@ -5,6 +5,8 @@ import { css } from "@emotion/core";
 import ClipLoader from "react-spinners/ClipLoader";
 import DotLoader from "react-spinners/DotLoader";
 import "./App.scss";
+import Home from "./views/Pages/Home/Home";
+import Offers from "./views/Pages/Offers/Offers";
 
 const override = css`
   display: block;
@@ -20,7 +22,7 @@ const loading = () => (
 // Containers
 const DefaultLayout = React.lazy(() => import("./containers/DefaultLayout"));
 const DefaultLayoutEmployee=React.lazy(() => import("./containers/DefaultLayout/DefaultLayoutEmployee"));
-
+const HomePagee=React.lazy(() => import("./views/Pages/Home/Home"));
 
 
 // Pages
@@ -36,9 +38,9 @@ const PrivateRouteUser = ({ component: Component, ...rest }) => (
       ? <Component {...props} />
       : <Redirect to={{
           pathname: '/#/login',
-         
+
         }} />
-       
+
   )} />
 )
 
@@ -48,6 +50,18 @@ class App extends Component {
       <HashRouter>
         <React.Suspense fallback={loading()}>
           <Switch>
+            <Route
+              exact
+              path="/offers"
+              name="Offer Page"
+              render={(props) => <Offers {...props} />}
+            />
+            <Route
+              exact
+              path="/main"
+              name="Main Page"
+              render={(props) => <Home {...props} />}
+            />
             <Route
               exact
               path="/login"
@@ -77,17 +91,17 @@ class App extends Component {
               name="Employee"
               render={(props) => <DefaultLayoutEmployee {...props} />}
             />
-            
+
             <Route
               path="/"
               name="Home"
               render={(props) => <DefaultLayout {...props} />}
             />
 
-          
 
 
-             
+
+
           </Switch>
         </React.Suspense>
       </HashRouter>

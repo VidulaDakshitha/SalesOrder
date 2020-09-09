@@ -13,7 +13,7 @@ export default {
         variant: 'info',
       },
     },
- 
+
     {
       name: 'Payments',
       url: '/salesmanagemnt/payment',
@@ -34,7 +34,12 @@ export default {
       url: '/#',
       icon: 'icon-list',
     },
-  
-    
+    {
+      name: 'Add New Product',
+      url: '/salesmanagemnt/addprodcut',
+      icon: 'icon-list',
+    },
+
+
   ],
 };

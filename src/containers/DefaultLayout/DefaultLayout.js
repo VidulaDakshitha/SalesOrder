@@ -22,6 +22,7 @@ import routes from "../../routes";
 
 import { css } from "@emotion/core";
 import DotLoader from "react-spinners/DotLoader";
+import AddNewProduct from "../../views/SalesManagement/AddNewProduct";
 const DefaultAside = React.lazy(() => import("./DefaultAside"));
 const DefaultFooter = React.lazy(() => import("./DefaultFooter"));
 const DefaultHeader = React.lazy(() => import("./DefaultHeader"));
@@ -125,13 +126,19 @@ class DefaultLayout extends Component {
               render={(props) => <Overhead {...props} />}
             />
 
+                  <Route
+                    exact
+                    path="/salesmanagemnt/addprodcut"
+                    name="Payment Page"
+                    render={(props) => <AddNewProduct {...props} />}
+                  />
 
-                  <Redirect from="/" to="/login" />
+                  <Redirect from="/" to="/main" />
                 </Switch>
               </Suspense>
             </Container>
           </main>
-        
+
         </div>
         <AppFooter>
           <Suspense fallback={this.loading()}>
