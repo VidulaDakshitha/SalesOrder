@@ -35,6 +35,7 @@ const Login = React.lazy(() => import("./views/Pages/Login"));
 const Register = React.lazy(() => import("./views/Pages/Register"));
 const Page404 = React.lazy(() => import("./views/Pages/Page404"));
 const Page500 = React.lazy(() => import("./views/Pages/Page500"));
+const Profile = React.lazy(() => import("./views/CustomerManagement/Profile"));
 
 const PrivateRouteUser = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
@@ -60,6 +61,12 @@ class App extends Component {
               path="/offers"
               name="Offer Page"
               render={(props) => <Offers {...props} />}
+            />
+            <Route
+              exact
+              path="/profile"
+              name="Profile Page"
+              render={(props) => <Profile {...props} />}
             />
             <Route
               exact
