@@ -39,6 +39,11 @@ export default {
       url: '/salesmanagemnt/addprodcut',
       icon: 'icon-list',
     },
+    {
+      name: 'Add New Offer',
+      url: '/salesmanagemnt/addoffer',
+      icon: 'icon-list',
+    },
 
 
   ],

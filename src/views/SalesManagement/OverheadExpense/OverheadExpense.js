@@ -58,7 +58,8 @@ class Payment extends Component{
             expense:"",
             amount:"",
             paymentMode:"",
-            payDate:""
+            payDate:"",
+          data:[]
         }
 
         this.onSubmit=this.onSubmit.bind(this);
@@ -96,9 +97,30 @@ class Payment extends Component{
       console.log(newExpense);
 
       axios.post('expense',newExpense)
-          .then(res=>console.log('Added new expense :'+res.data))
+          .then(res=>{
+            console.log('Added new expense :'+res.data)
+            window.location.reload()
+          })
           .catch(err=>console.log('Error!! unsuccessful :'+err.data));
+
   }
+
+  componentDidMount() {
+  this.getData();
+    }
+
+  getData=()=>{
+    axios.get('expense')
+      .then(res=>{
+        this.setState({
+          data:res.data.data
+        })
+        console.log(res.data)
+
+      })
+      .catch(err=>console.log('Error!! unsuccessful :'+err.data));
+  }
+
 
     toggleLarge=()=> {
         this.setState({
@@ -151,23 +173,21 @@ render(){
                         </tr>
                       </thead>
                       <tbody>
-
-                          <tr >
-                              <i
+                      {this.state.data.map(row=>(
+                        <tr >
+                          <i
                             className="fa fa-edit fa-lg mt-4"
                             onClick={()=>{}}
                           ></i>
-                            <td>001</td>
-                            <td>Rent</td>
-                            <td>10000.0</td>
-                            <td>
-                              Checque
-                            </td>
-                            <td>
-                              2020-10-01
-                            </td>
-                            <td><Button>View Details</Button></td>
-                          </tr>
+                          <td>{row.oh_id}</td>
+                          <td>{row.expense}</td>
+                          <td>{row.amount}</td>
+                          <td>{row.paymentMode}</td>
+                          <td>{row.payDate}</td>
+                          <td><Button>View Details</Button></td>
+                        </tr>
+                      ))}
+
 
                       </tbody>
                     </Table>
@@ -243,11 +263,11 @@ render(){
 
                                           onChange={this.handlePaymentMode}
                                         >
-                                            <option value="0">Select Catergory</option>
+                                            <option >Select Catergory</option>
 
-                                    <option value="1">Cheque</option>
-                                    <option value="2">Cash</option>
-                                    <option value="2">Bank</option>
+                                    <option value="Cheque">Cheque</option>
+                                    <option value="Cash">Cash</option>
+                                    <option value="Bank">Bank</option>
 
                                         </Input>
                                       </FormGroup>

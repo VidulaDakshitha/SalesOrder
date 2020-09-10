@@ -9,7 +9,7 @@ class ProductCard extends Component {
     render() {
         return (
             <div className="card mx-auto" style={{width:'90%',height:'450px'}} >
-                <img  src={process.env.REACT_APP_BASEURL+"img/product/"+this.props.data.img} className="card-img-top" alt="" />
+                <img  src={process.env.REACT_APP_BASEURL+"/"+this.props.data.img} className="card-img-top" alt="" />
                     <div className="card-body">
                         <h5 className="card-title">{this.props.data.proName}</h5>
                         <h5 className="card-title">{this.props.data.proPrice}</h5>

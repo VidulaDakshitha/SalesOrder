@@ -29,7 +29,10 @@ class Register extends Component {
       nic: "",
       email:"",
       phone:"",
-      profession:""
+      profession:"",
+      address:"",
+      firstname:"",
+      lastname:""
 
 
     }
@@ -90,13 +93,14 @@ class Register extends Component {
           e.preventDefault();
 
           const regUsers={
-            username:this.state.username,
+            username:this.state.firstname+" "+this.state.lastname,
             password:this.state.password,
             gender: this.state.gender,
             dob: this.state.dob,
             email: this.state.email,
             contact: this.state.phone,
-            profession: this.state.profession
+            profession: this.state.profession,
+            address:this.state.address
           }
 
           // const url = "/user/update/";
@@ -157,15 +161,7 @@ class Register extends Component {
                     </InputGroup>
 
 
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="User Name" name="username" value={this.state.username}  onChange={this.onChangeHandler}/>
 
-                    </InputGroup>
 
                     <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -193,6 +189,16 @@ class Register extends Component {
                         </InputGroupText>
                       </InputGroupAddon>
                       <Input type="text" placeholder="NIC" name="nic" value={this.state.nic}   onChange={this.onChangeHandler}/>
+
+                    </InputGroup>
+
+                    <InputGroup className="mb-3">
+                      <InputGroupAddon addonType="prepend">
+                        <InputGroupText>
+                          <i className="icon-user"></i>
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <Input type="text" placeholder="Address" name="address" value={this.state.address}   onChange={this.onChangeHandler}/>
 
                     </InputGroup>
 

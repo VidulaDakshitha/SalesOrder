@@ -38,7 +38,8 @@ class EmployeeDashboard extends Component{
             dob:"",
             nic:"",
             job_role:"",
-            address:""
+            address:"",
+          data:[]
         }
     }
 
@@ -86,7 +87,8 @@ class EmployeeDashboard extends Component{
           dob: this.state.dob,
           nic: this.state.nic,
           job_role: this.state.job_role,
-          address: this.state.address
+          address: this.state.address,
+
         }
 
         // const url = "/user/update/";
@@ -106,11 +108,25 @@ class EmployeeDashboard extends Component{
           console.log(regEmployees);
 
           axios.post('employee',regEmployees)
-                  .then(res=>console.log('Added new register user :'+res.data))
+                  .then(res=>{
+                    console.log('Added new register user :'+res.data)
+                    window.location.reload()
+                  })
                   .catch(err=>console.log('Error!! unsuccessful :'+err.data));
       }
 
-    render(){
+  componentDidMount() {
+    axios.get('employee')
+      .then(res=>{
+        this.setState({
+          data:res.data.data
+        })
+        console.log(res.data)
+      })
+      .catch(err=>console.log('Error!! unsuccessful :'+err.data));
+  }
+
+  render(){
 
         return(
 <div>
@@ -123,7 +139,8 @@ class EmployeeDashboard extends Component{
     </CardHeader>
 <Table responsive className="table table-hover hover">
             <thead>
-              <tr>
+
+            <tr>
                 <i
                   className="fa fa-reorder fa-lg mt-4"
                   style={{ paddingTop: 12 }}
@@ -138,35 +155,49 @@ class EmployeeDashboard extends Component{
                 </th>
                 <th>
                   <i className="fa fa-id-card fa-fw mt-4"></i>
-                  Email
+                  Address
                 </th>
                 <th>
                   <i className="fa fa-calendar fa-fw mt-4"></i>
                   Role
                 </th>
+              <th>
+                <i className="fa fa-calendar fa-fw mt-4"></i>
+                Gender
+              </th>
+              <th>
+                <i className="fa fa-calendar fa-fw mt-4"></i>
+                Birth Day
+              </th>
               </tr>
+
+
             </thead>
 
             <tbody>
-
-                <tr>
-                  <i
-                    className="fa fa-edit fa-lg mt-4"
-                    onClick={() => {
-
-
-                    }}
-                  ></i>
-
-                <td>001</td>
-                  <td>Nipuni Nadeeshani</td>
-                  <td>Nipuni@gmail.com</td>
-                  <td>Cashier</td>
+            {this.state.data.map(row=>(
+              <tr>
+                <i
+                  className="fa fa-edit fa-lg mt-4"
+                  onClick={() => {
 
 
+                  }}
+                ></i>
+
+                <td>{row.user_id}</td>
+                <td>{row.username}</td>
+                <td>{row.address}</td>
+                <td>{row.job_role}</td>
+                <td>{row.gender}</td>
+                <td>{row.dob}</td>
 
 
-                </tr>
+
+
+              </tr>
+            ))}
+
 
             </tbody>
           </Table>
@@ -211,7 +242,7 @@ class EmployeeDashboard extends Component{
                                     <i className="icon-user"></i>
                                   </InputGroupText>
                                 </InputGroupAddon>
-                                <Input type="text" placeholder="Username" name="username" value={this.state.username} onChange={this.onChangeHandler}/>
+                                <Input type="text" placeholder="Full Name" name="username" value={this.state.username} onChange={this.onChangeHandler}/>
                               </InputGroup>
 
                               <FormGroup tag="fieldset">
@@ -269,6 +300,14 @@ class EmployeeDashboard extends Component{
                                 </InputGroupAddon>
                                 <Input type="text" placeholder="Job role" name="job_role" value={this.state.job_role} onChange={this.onChangeHandler}/>
                               </InputGroup>
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-user"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input type="password" placeholder="Password" name="password" value={this.state.password} onChange={this.onChangeHandler}/>
+                        </InputGroup>
 
                     <Button color="success" type="submit" >Add Employee</Button>
 

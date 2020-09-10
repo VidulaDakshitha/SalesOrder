@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row } from 'reactstrap';
-import axios from "axios";
+import axios from "../../axios";
 import alertify from "alertifyjs/build/alertify";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/alertify.css";
@@ -23,9 +23,9 @@ class Supplier extends Component {
     this.handleContact = this.handleContact.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
     this.handleJoinDate = this.handleJoinDate.bind(this);
-    
+
   }
-  
+
   handleSupName(event){
     this.setState({supName: event.target.value})
   }
@@ -38,7 +38,7 @@ class Supplier extends Component {
   handleJoinDate(event){
     this.setState({joinDate: event.target.value})
   }
-  
+
 
   onSubmitHandler=(e)=>{
     e.preventDefault();
@@ -52,7 +52,10 @@ class Supplier extends Component {
     console.log(supAdd);
 
     axios.post('supplier',supAdd)
-                    .then(res=>console.log('Added new register user :'+res.data))
+                    .then(res=>{
+                      console.log('Added new register user :'+res.data)
+                      window.location.href="/#/employee/supplierdisplay"
+                    })
                     .catch(err=>console.log('Error!! unsuccessful :'+err.data));
   }
 
@@ -100,17 +103,17 @@ class Supplier extends Component {
                         </InputGroupAddon>
                         <Input type="text" placeholder="Join Date" name="joinDetails" onChange={this.handleJoinDate} required />
                       </InputGroup>
-                      
+
                       <Row>
                         <Col xs="6">
                           <Button type="submit" color="primary" className="px-4">ADD</Button>
                         </Col>
                       </Row>
-                      
+
                     </Form>
                   </CardBody>
                 </Card>
-                
+
               </CardGroup>
             </Col>
           </Row>

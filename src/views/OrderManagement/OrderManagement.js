@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, CardBody, CardGroup, Col, Container, Form, Input, InputGroup, InputGroupAddon, InputGroupText, Row, CardTitle, CardText, Table } from 'reactstrap';
-import axios from "axios";
+import axios from "../../axios";
 import alertify from "alertifyjs/build/alertify";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/alertify.css";
@@ -16,16 +16,17 @@ class OrderManagement extends Component {
       proName:"",
       proPrice:"",
       proDetails:"",
-      pictures: []
+      pictures: [],
+      orders:[]
     }
 
     this.onDrop = this.onDrop.bind(this);
     this.handleProName = this.handleProName.bind(this);
     this.handleProPrice = this.handleProPrice.bind(this);
     this.handleProDetails = this.handleProDetails.bind(this);
-    
+
   }
-  
+
   handleProName(event){
     this.setState({proName: event.target.value})
   }
@@ -39,6 +40,14 @@ class OrderManagement extends Component {
     this.setState({
         pictures: this.state.pictures.concat(picture),
     });
+}
+componentDidMount() {
+    axios.get('orders').then(res=>{
+      this.setState({
+        orders:res.data.data
+      })
+      console.log(res.data.data)
+    }).catch(err=>console.log(err))
 }
 
   onSubmitHandler=(e)=>{
@@ -65,39 +74,27 @@ class OrderManagement extends Component {
                     <Table striped>
                         <thead>
                         <tr>
-                        <th>Order ID</th>
-                        <th>Order Time</th>
-                        <th>Route</th>
-                        <th>Order Status</th>
-                        <th>Driver Name</th>
-                        <th>Driver Contact</th>
+                          <th>Order ID</th>
+                          <th>Address</th>
+                          <th>Status</th>
+                          <th>Type</th>
+                          <th>Invoice ID</th>
+                          <th>Driver ID</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        </tr>
+                    {this.state.orders.filter(o=>o.delivery_Person_id !=="noPerson").map(row=>(
+                      <tr>
+                        <th scope="row">{row.order_id}</th>
+                        <td>{row.address}</td>
+                        <td>{row.status}</td>
+                        <td>{row.type}</td>
+                        <td>{row.invoice_id}</td>
+                        <td>{row.delivery_Person_id}</td>
+                      </tr>
+                    ))}
+
+
                     </tbody>
                 </Table>
              </CardText>
@@ -129,9 +126,9 @@ class OrderManagement extends Component {
                     </tbody>
                 </Table>
                 </CardText>
-            </Card>     
+            </Card>
             </Col>
-            <Col md="6"> 
+            <Col md="6">
             <Card body outline color="secondary">
                 <CardTitle>New Orders</CardTitle>
                 <CardText>
@@ -139,40 +136,33 @@ class OrderManagement extends Component {
                         <thead>
                         <tr>
                         <th>Order ID</th>
-                        <th>Order Time</th>
-                        <th>Route</th>
+                        <th>Address</th>
+                        <th>Status</th>
                         <th>Type</th>
+                          <th>Invoice ID</th>
                         <th>Assign Driver</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
+
+                    {this.state.orders.filter(o=>o.delivery_Person_id==="noPerson").map(row=>(
+                      <tr>
+                        <th scope="row">{row.order_id}</th>
+                        <td>{row.address}</td>
+                        <td>{row.status}</td>
+                        <td>{row.type}</td>
+                        <td>{row.invoice_id}</td>
                         <td><Button color="primary">Assign </Button></td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td><Button color="primary">Assign </Button></td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td>Dummy</td>
-                        <td><Button color="primary ">Assign </Button></td>
-                        </tr>
+                      </tr>
+                    ))}
+
+
                     </tbody>
                 </Table>
 
 
                 </CardText>
-               
+
             </Card>
             </Col>
           </Row>

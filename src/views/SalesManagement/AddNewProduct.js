@@ -35,8 +35,8 @@ class AddNewProduct extends Component {
       proDetails:this.state.proDetails,
       img:img[img.length-1]
     }
-    axios.post('/stock',data).then(res=>{
-      axios.post('/stock/image',formData).then(res=>{
+    axios.post('stock',data).then(res=>{
+      axios.post('stock/image',formData).then(res=>{
        window.location.href='/#/main'
       }).catch(err=>console.log(err))
 

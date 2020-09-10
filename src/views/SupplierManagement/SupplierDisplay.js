@@ -7,7 +7,7 @@ import {
     Table, Alert,
 } from "reactstrap";
 
-import axios from "axios";
+import axios from "../../axios";
 
 
 class SupplierDisplay extends Component {
@@ -18,8 +18,20 @@ class SupplierDisplay extends Component {
         };
     }
 
+    componentDidMount() {
+      axios.get('supplier')
+        .then(res=>{
+          this.setState({
+            data:res.data.data
+          })
+          console.log(res.data)
 
-    render() {
+        })
+        .catch(err=>console.log('Error!! unsuccessful :'+err.data));
+    }
+
+
+  render() {
         return (
             <div>
                 <Container>
@@ -33,58 +45,33 @@ class SupplierDisplay extends Component {
                             <th>Name</th>
                             <th>Sup ID</th>
                             <th>Email</th>
-                            <th>Provided Items</th>
-                            <th>Phone Number</th>
+                          <th>Phone Number</th>
+                            <th>Join</th>
+
                             <th>Actions</th>
                         </tr>
                         </thead>
                             <tbody>
-                                <tr>
-                                <td>Dummy</td>
+                            {this.state.data.map(row=>(
+                              <tr>
+                                <td>{row.supplier_name}</td>
                                 <th scope="row">#</th>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
+                                <td>{row.supplier_id}</td>
+                                <td>{row.email}</td>
+                                <td>{row.contact}</td>
+                                <td>{row.join_date}</td>
                                 <td><Button color="success">Edit</Button> <Button color="danger">Remove</Button></td>
-                                </tr>
+                              </tr>
 
-                                <tr>
-                                <td>Dummy</td>
-                                <th scope="row">#</th>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td><Button color="success">Edit</Button> <Button color="danger">Remove</Button></td>
-                                </tr>
+                            ))}
 
-                                <tr>
-                                <td>Dummy</td>
-                                <th scope="row">#</th>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td><Button color="success">Edit</Button> <Button color="danger">Remove</Button></td>
-                                </tr>
 
-                                <tr>
-                                <td>Dummy</td>
-                                <th scope="row">#</th>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td><Button color="success">Edit</Button> <Button color="danger">Remove</Button></td>
-                                </tr>
 
-                                <tr>
-                                <td>Dummy</td>
-                                <th scope="row">#</th>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td>Dummy</td>
-                                <td><Button color="success">Edit</Button> <Button color="danger">Remove</Button></td>
-                                </tr>
+
+
+
                             </tbody>
-                        
+
                     </Table>
                 </Container>
 

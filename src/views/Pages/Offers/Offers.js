@@ -1,8 +1,29 @@
 import React, {Component} from 'react';
 import Navigation from "../../Navigation/Navigation";
 import OfferCard from "./OfferCard";
+import axios from "../../../axios";
+import ProductCard from "../Home/ProductCard";
 
 class Offers extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state={
+      data:[]
+    }
+  }
+
+  componentDidMount() {
+
+    axios.get('/offers').then(res=>{
+      this.setState({
+        data:res.data.data
+      })
+      console.log(res.data.data)
+    }).catch(err=>console.log(err))
+  }
+
+
   render() {
     return (
       <div>
@@ -13,10 +34,12 @@ class Offers extends Component {
           <div className="row">
 
             <br/>
-            <div className="col-md-3">
-            <OfferCard/>
-            </div>
 
+            {this.state.data.map(pro=>(
+              <div className="col-md-3">
+                <OfferCard data={pro}/>
+              </div>
+            ))}
           </div>
         </div>
       </div>
