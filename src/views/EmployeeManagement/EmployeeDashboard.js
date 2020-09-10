@@ -37,7 +37,7 @@ class EmployeeDashboard extends Component{
             gender:"",
             dob:"",
             nic:"",
-            job_role:"",
+            job_role:"Delivery Person",
             address:"",
           data:[]
         }
@@ -215,26 +215,7 @@ class EmployeeDashboard extends Component{
                     </ModalHeader>
                     <ModalBody>
                       <form onSubmit={this.onSubmitHandler}>
-                      {/* <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="First Name" name="firstname" value={this.state.firstname} autoComplete="new-password"  onChange={this.onChangeHandler}/>
 
-                    </InputGroup>
-
-
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Last Name" name="lastname" value={this.state.lastname}   onChange={this.onChangeHandler}/>
-
-                    </InputGroup> */}
 
                               <InputGroup className="mb-3">
                                 <InputGroupAddon addonType="prepend">
@@ -298,7 +279,15 @@ class EmployeeDashboard extends Component{
                                     <i className="icon-user"></i>
                                   </InputGroupText>
                                 </InputGroupAddon>
-                                <Input type="text" placeholder="Job role" name="job_role" value={this.state.job_role} onChange={this.onChangeHandler}/>
+
+                                <select type="text" className="form-control" placeholder="Job role" name="job_role" value={this.state.job_role} onChange={this.onChangeHandler}>
+                                  <option value="Delivery Person">Delivery Person</option>
+                                  <option value="Cashier">Cashier</option>
+                                  <option value="Manager">Manager</option>
+                                  <option value="Labour">Labour </option>
+                                  <option value="Accountant">Accountant </option>
+                                </select>
+
                               </InputGroup>
                         <InputGroup className="mb-3">
                           <InputGroupAddon addonType="prepend">

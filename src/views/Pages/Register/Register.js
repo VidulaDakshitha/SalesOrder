@@ -8,6 +8,7 @@ import "alertifyjs/build/css/alertify.css";
 import "alertifyjs/build/css/themes/default.min.css";
 // import * as BaseService from "../../../BaseService.js";
 import axios from '../../../axios';
+import Navigation from "../../Navigation/Navigation";
 
 
 class Register extends Component {
@@ -120,15 +121,20 @@ class Register extends Component {
             console.log(regUsers);
 
             axios.post('customer',regUsers)
-                    .then(res=>console.log('Added new register user :'+res.data))
+                    .then(res=>{
+                      console.log('Added new register user :'+res.data)
+                      localStorage.setItem('nUid',res.data.data.user_id );
+                      window.location.href="/#/profile";
+                    })
                     .catch(err=>console.log('Error!! unsuccessful :'+err.data));
   }
 
   render() {
     return (
-
-
+      <div>
+      <Navigation/>
       <div className="app flex-row align-items-center" style={{paddingTop:"350px"}}>
+
         <Container>
           <Row className="justify-content-center">
             <Col md="9" lg="7" xl="6">
@@ -235,15 +241,7 @@ class Register extends Component {
 
 
 
-                    <InputGroup className="mb-3">
-                      <InputGroupAddon addonType="prepend">
-                        <InputGroupText>
-                          <i className="icon-user"></i>
-                        </InputGroupText>
-                      </InputGroupAddon>
-                      <Input type="text" placeholder="Address" name="address" value={this.state.address}   onChange={this.onChangeHandler}/>
 
-                    </InputGroup>
 
 
                     <InputGroup className="mb-3">
@@ -295,6 +293,7 @@ class Register extends Component {
             </Col>
           </Row>
         </Container>
+      </div>
       </div>
     );
   }

@@ -6,7 +6,7 @@ import alertify from "alertifyjs/build/alertify";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/alertify.css";
 import "alertifyjs/build/css/themes/default.min.css";
-
+import {Modal} from "react-bootstrap";
 
 
 class OrderManagement extends Component {
@@ -17,7 +17,13 @@ class OrderManagement extends Component {
       proPrice:"",
       proDetails:"",
       pictures: [],
-      orders:[]
+      orders:[],
+      employee:[],
+      c:1,
+      show:false,
+      adriver:"",
+      nowSelected:"",
+      mess:""
     }
 
     this.onDrop = this.onDrop.bind(this);
@@ -48,6 +54,19 @@ componentDidMount() {
       })
       console.log(res.data.data)
     }).catch(err=>console.log(err))
+
+
+  axios.get('employee')
+    .then(res=>{
+      this.setState({
+        employee:res.data.data
+      })
+      console.log(res.data.data)
+    })
+    .catch(err=>console.log('Error!! unsuccessful :'+err.data));
+
+
+
 }
 
   onSubmitHandler=(e)=>{
@@ -61,8 +80,61 @@ componentDidMount() {
 
     console.log(stockAdd);
   }
+  handleClose=()=>{
+    if (this.state.show){
+      this.setState({
+        show:false
+      })
+    }else{
+      this.setState({
+        show:true
+      })
+    }
 
+  }
+
+  assignDriver=id=>{
+
+    console.log(this.state.nowSelected,this.state.adriver);
+   if (this.state.adriver===""){
+     this.setState({
+       mess:"Select Driver"
+     })
+   }else{
+     this.setState({
+       mess:""
+     })
+
+     var temp = this.state.adriver.split("/");
+     var x={
+       delivery_Person_id:temp[1].trim(),
+       username:temp[0].trim(),
+       order_id:this.state.nowSelected.trim()
+     }
+      axios.put('orders',x).then(res=>{
+        console.log(res)
+       window.location.reload();
+      }).catch(err=>console.log(err))
+
+
+   }
+
+
+  }
+
+  handler=(id)=>{
+    this.state.nowSelected=id
+    this.handleClose()
+  }
+
+
+  changeHandler=e=>{
+    this.setState({
+      [e.target.name]:e.target.value
+    })
+  }
   render() {
+    this.state.c=1;
     return (
       <div className="app flex-row align-items-center">
         <Container>
@@ -79,7 +151,7 @@ componentDidMount() {
                           <th>Status</th>
                           <th>Type</th>
                           <th>Invoice ID</th>
-                          <th>Driver ID</th>
+                          <th>Delivery Person</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -111,18 +183,14 @@ componentDidMount() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        </tr>
-                        <tr>
-                        <th scope="row">3</th>
-                        <td>Larry</td>
-                        </tr>
+
+                    {this.state.employee.filter(e=>e.job_role==="Delivery Person").map(row=>(
+                      <tr>
+                        <th scope="row">{this.state.c}</th>
+                        <td>{row.username}</td>
+                      </tr>
+                    ))}
+
                     </tbody>
                 </Table>
                 </CardText>
@@ -152,7 +220,7 @@ componentDidMount() {
                         <td>{row.status}</td>
                         <td>{row.type}</td>
                         <td>{row.invoice_id}</td>
-                        <td><Button color="primary">Assign </Button></td>
+                        <td><Button color="primary" onClick={()=>this.handler(row.order_id)}>Assign </Button></td>
                       </tr>
                     ))}
 
@@ -167,6 +235,36 @@ componentDidMount() {
             </Col>
           </Row>
         </Container>
+
+        <Modal show={this.state.show} onHide={this.handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Assign Driver For </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+          <div>
+            <p className="text-center text-danger">{this.state.mess}</p>
+            <select name="adriver" id="" value={this.state.adriver} onChange={this.changeHandler} className="form-control">
+              <option >Assign Driver</option>
+              {this.state.employee.filter(e=>e.job_role==="Delivery Person"&&e.assignDelivery==="No").map(row=>(
+                <option value={`${row.username}/${row.user_id}`}>{row.username}</option>
+
+              ))}
+
+            </select>
+          </div>
+
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={this.handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={this.assignDriver}>
+              Assign Now
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
       </div>
     );
   }

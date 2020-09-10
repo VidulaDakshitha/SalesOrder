@@ -7,6 +7,7 @@ import alertify from "alertifyjs/build/alertify";
 import "alertifyjs/build/css/alertify.min.css";
 import "alertifyjs/build/css/alertify.css";
 import "alertifyjs/build/css/themes/default.min.css";
+import Navigation from "../../Navigation/Navigation";
 class Login extends Component {
 
   constructor(props){
@@ -16,7 +17,7 @@ class Login extends Component {
       password:"",
     }
   }
-  
+
 
 
   onChangeHandler=(e)=>{
@@ -54,12 +55,12 @@ class Login extends Component {
 if(this.state.username==="sales" && this.state.password==="sales")
 {
   window.location.href="#/salesmanagement"
-  
+
 }else if(this.state.username==="employee" && this.state.password==="employee"){
 
   window.location.href="#/employee/employeemanagement"
-  
-  
+
+
 }else if(this.state.username==="order" && this.state.password==="order"){
   window.location.href="#/order/ordermanagement"
 }else if(this.state.username==="customer" && this.state.password==="customer"){
@@ -71,44 +72,46 @@ if(this.state.username==="sales" && this.state.password==="sales")
   }
   render() {
     return (
-      <div className="app flex-row align-items-center">
-        <Container>
-          <Row className="justify-content-center">
-            <Col md="6">
-              <CardGroup>
-                <Card className="p-4">
-                  <CardBody>
-                    <Form onSubmit={this.onSubmitHandler}>
-                      <h1>Login to proceed</h1>
-                      <p className="text-muted">Sign In to your account</p>
-                      <InputGroup className="mb-3">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-user"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="text" placeholder="Username" autoComplete="username" name="username" value={this.state.username} onChange={this.onChangeHandler} />
-                      </InputGroup>
-                      <InputGroup className="mb-4">
-                        <InputGroupAddon addonType="prepend">
-                          <InputGroupText>
-                            <i className="icon-lock"></i>
-                          </InputGroupText>
-                        </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" name="password" value={this.state.password} onChange={this.onChangeHandler} />
-                      </InputGroup>
-                      <Row>
-                        <Col xs="6">
-                          <Button color="primary" className="px-4">Login</Button>
-                        </Col>
-                        <Col xs="6" className="text-right">
-                          <Button color="link" className="px-0">Forgot password?</Button>
-                        </Col>
-                      </Row>
-                    </Form>
-                  </CardBody>
-                </Card>
-                {/* <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
+      <div>
+        <Navigation/>
+        <div className="app flex-row align-items-center">
+          <Container>
+            <Row className="justify-content-center">
+              <Col md="6">
+                <CardGroup>
+                  <Card className="p-4">
+                    <CardBody>
+                      <Form onSubmit={this.onSubmitHandler}>
+                        <h1>Login to proceed</h1>
+                        <p className="text-muted">Sign In to your account</p>
+                        <InputGroup className="mb-3">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-user"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input type="text" placeholder="Username" autoComplete="username" name="username" value={this.state.username} onChange={this.onChangeHandler} />
+                        </InputGroup>
+                        <InputGroup className="mb-4">
+                          <InputGroupAddon addonType="prepend">
+                            <InputGroupText>
+                              <i className="icon-lock"></i>
+                            </InputGroupText>
+                          </InputGroupAddon>
+                          <Input type="password" placeholder="Password" autoComplete="current-password" name="password" value={this.state.password} onChange={this.onChangeHandler} />
+                        </InputGroup>
+                        <Row>
+                          <Col xs="6">
+                            <Button color="primary" className="px-4">Login</Button>
+                          </Col>
+                          <Col xs="6" className="text-right">
+                            <Button color="link" className="px-0">Forgot password?</Button>
+                          </Col>
+                        </Row>
+                      </Form>
+                    </CardBody>
+                  </Card>
+                  {/* <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
@@ -120,11 +123,13 @@ if(this.state.username==="sales" && this.state.password==="sales")
                     </div>
                   </CardBody>
                 </Card> */}
-              </CardGroup>
-            </Col>
-          </Row>
-        </Container>
+                </CardGroup>
+              </Col>
+            </Row>
+          </Container>
+        </div>
       </div>
+
     );
   }
 }
